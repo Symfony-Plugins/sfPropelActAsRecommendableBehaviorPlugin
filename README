@@ -1,0 +1,121 @@
+= sfPropelActAsRecommendableBehaviorPlugin =
+
+== Introduction ==
+This plugin implements a behavior that permits to recommend objects. A recommandation acts as the incrementation of a counter "à la Digg".
+
+== Features ==
+
+ * add a recommendation on an object (increments the counter)
+ * get the object's score
+ * unit-tested
+
+== Philosophy of the stuff ==
+
+ * recommendable objects must have a primary key
+ * users objects muse have a primary key
+ * recommendations can only be attached on objects that have already been saved
+ * recommendations are saved when applied
+ * unregistered user's recommendations are saved via cookies
+ * unit-tests needs an sfGuardUser object
+
+== Get it installed ==
+
+ * go to your project's root
+
+ * Install the plugin:
+   {{{
+     ./symfony plugin-install http://plugins.symfony-project.com/sfPropelActAsRecommendableBehaviorPlugin
+   }}}
+
+ * if not already done, enabled behaviors in config/propel.ini:
+   {{{
+     propel.builder.addBehaviors = true
+   }}}
+
+ * edit the classes that you want to make Recommendable. For instance, for lib/model/Post.php:
+   {{{
+   #!php
+   <?php
+     class Post extends BasePost
+     {
+     }
+
+     sfPropelBehavior::add('Post', array('sfPropelActAsRecommendableBehavior'));
+   }}}
+
+ * rebuild the model:
+   {{{
+     ./symfony propel-build-all
+   }}}
+
+ * clear cache:
+   {{{
+     ./symfony cc
+   }}}
+
+
+== Usage ==
+
+=== Adding recommendation to a Recommendable object ===
+Consider a Propel "Post" class:
+
+{{{
+#!php
+<?php
+class Post extends BasePost
+{
+}
+
+sfPropelBehavior::add('Post', array('sfPropelActAsRecommendableBehavior'));
+}}}
+
+When the sfPropelActAsRecommendableBehaviorPlugin is applied to the Post class, that class automagically gets Recommendable:
+{{{
+#!php
+<?php
+$post = new Post();
+// blah
+$post->save();
+$post->recommend(); // for unregistered users
+$post->recommend($user->getPrimaryKey()); // $user is a registered user object
+}}}
+
+=== Retrieving one object's recommendation score ===
+{{{
+#!php
+<?php
+$post = PostPeer::retrieveByPk(1);
+$score = $post->getRecommendationScore();
+echo '<p>This post has been recommended by '.$score.' users</p>';
+}}}
+
+== API ==
+The behavior implement the following methods:
+ * '''recommend($user_id)''' - add a recommendation on the object (increments the counter). The user id is not mandatory: if not given, a cookie is set to avoid multiple recommendation by a single user
+ * '''getRecommendationScore()''' - retrieves the object's score
+
+== Unit testing ==
+The plugin has been unit-tested. The tests are located in test/unit/sfPropelActAsRecommendableBehaviorTest.php. If you want to run them:
+ * install the plugin
+ * be sure you are using sfGuardUser object in your application
+ * configure a model for using it, for instance "Post"
+ * edit this file and, if required, modify the application name and the TEST_CLASS constant, line 3:
+   {{{
+     define('TEST_CLASS', 'Post');
+   }}}
+ * run the tests:
+   {{{
+     php plugins/sfPropelActAsRecommendableBehaviorPlugin/test/unit/sfPropelActAsRecommendableBehaviorTest.php
+   }}}
+
+== License and credits ==
+This plugin is licensed under the MIT license. You can contact the maintainer at rcieplicki@clever-age.com
+
+== Changelog ==
+
+=== version 0.1 - 2007-09-13 ===
+Initial public release. Features recommendation for both registered and unregistered users, and score retrieving.
+
+== Roadmap ==
+ * recommendation helpers
+ * handle non-sfGuardUser users

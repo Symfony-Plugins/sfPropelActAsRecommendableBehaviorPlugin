@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfPropelActAsRecommendableBehaviorPlugin</name>
+ <channel>pear.symfony-project.com</channel>
+ <summary>Propel Recommendable behavior</summary>
+ <description>This plugin implements a behavior that permits to recommend objects. A recommandation acts as the incrementation of a counter "a la Digg".</description>
+ <lead>
+  <name>Remi Cieplicki</name>
+  <user>rcieplicki</user>
+  <email>rcieplicki@clever-age.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2007-09-19</date>
+ <time>17:18:59</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.symfony-project.com/license">MIT license</license>
+ <notes>
+   Initial public release. Features recommendation for both registered and unregistered users, and score retrieving.
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="config">
+    <file name="config.php" role="data" />
+    <file name="schema.yml" role="data" />
+    <file name="schemaConfig.php" role="data" />
+    <file name="sfPropelActAsRecommendableBehaviorPlugin.yml.sample" role="data" />
+   </dir>
+   <dir name="lib">
+    <dir name="model">
+     <file name="sfRecommendation.php" role="data" />
+     <file name="sfRecommendationPeer.php" role="data" />
+     <file name="sfUserRecommendation.php" role="data" />
+     <file name="sfUserRecommendationPeer.php" role="data" />
+    </dir>
+     <file name="sfPropelActAsRecommendableBehavior.class.php" role="data" />
+   </dir>
+   <dir name="test">
+    <dir name="unit">
+     <!-- unit tests -->
+     <file name="sfPropelActAsRecommendableBehaviorTest.php" role="data" />
+    </dir>
+   </dir>
+   <file name="README" role="data" />
+   <file name="LICENSE" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.0.0</min>
+    <max>1.1.0</max>
+    <exclude>1.1.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog />
+</package>

@@ -1,0 +1,22 @@
+<?php include('schemaConfig.php') ?>
+<?php echo $config['connection'] ?>:
+  _attributes:              { package: plugins.sfPropelActAsRecommendableBehaviorPlugin.lib.model }
+
+  <?php echo $config['recommendation_table'] ?>:
+    _attributes:            { phpName: sfRecommendation, package: plugins.sfPropelActAsRecommendableBehaviorPlugin.lib.model }
+    id:
+    recommendable_model:    { type: varchar, size: 50, required: true }
+    recommendable_id:       { type: varchar, size: 32, required: true }
+    score:                  { type: integer }
+    _indexes:
+      recommendable_index:  [recommendable_model, recommendable_id]
+
+  <?php echo $config['recommendation_user_table'] ?>:
+    _attributes:            { phpName: sfUserRecommendation, package: plugins.sfPropelActAsRecommendableBehaviorPlugin.lib.model }
+    id:
+    recommendable_model:    { type: varchar, size: 50, required: true }
+    recommendable_id:       { type: varchar, size: 32, required: true }
+    user_id:                { type: integer, foreignTable: <?php echo $config['user_table'] ?>, foreignReference: <?php echo $config['user_id'] ?>, onDelete: cascade }
+    created_at:
+    _indexes:
+      recommendable_index:  [recommendable_model, recommendable_id]
